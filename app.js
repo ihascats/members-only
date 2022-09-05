@@ -5,13 +5,29 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
+const validator = require('express-validator');
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.connect(process.env.DB_ACCESS_KEY, () => {
-  console.log('connected to mongodb');
-});
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+// Connect MongoDB at default port 27017.
+mongoose.connect(
+  process.env.DB_ACCESS_KEY,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  },
+  (err) => {
+    if (!err) {
+      console.log('MongoDB Connection Succeeded.');
+    } else {
+      console.log('Error in DB connection: ' + err);
+    }
+  },
+);
 
 const indexRouter = require('./routes/index');
 
@@ -24,8 +40,18 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 app.use('/', indexRouter);
