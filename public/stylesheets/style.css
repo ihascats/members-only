@@ -78,6 +78,7 @@ form > input {
   margin: 4px;
   outline: none;
   border-bottom: 2px solid #78c0e0;
+  color: #70b86e;
 }
 
 form > input:focus {
