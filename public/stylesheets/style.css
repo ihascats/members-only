@@ -88,3 +88,16 @@ form > label {
   letter-spacing: 2px;
   font-size: 14px;
 }
+
+form > button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #78c0e0;
+  font-size: 24px;
+  padding: 8px 0;
+}
+
+form > button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #70b86e;
+}

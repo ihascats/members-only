@@ -1,0 +1,13 @@
+extends layout 
+
+block content
+  form(action="", method="post")
+    h1 Log In
+    
+    label(for="email") EMAIL
+    input(type="email" name="email" placeholder="example@mail.com")
+    
+    label(for="password") PASSWORD
+    input(type="password" name="password")
+
+    button Log In
