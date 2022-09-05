@@ -4,4 +4,16 @@ html
     title Forum
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    div(class='wrapper')
+      aside 
+        nav 
+          ul 
+            a(href="/")
+              li Forum
+            div 
+              a(href="/log-in")
+                li Log In 
+              a(href="/sign-up")
+                li Sign Up 
+      div(class='content')
+        block content

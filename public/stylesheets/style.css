@@ -6,3 +6,85 @@
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+
+body {
+  background-color: #151515;
+  color: #78c0e0;
+}
+
+.wrapper {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  align-items: center;
+}
+
+.wrapper > aside {
+  width: 300px;
+  height: 100vh;
+  background-color: #1f1f1f;
+  padding: 32px 16px;
+}
+
+.wrapper > aside ul {
+  display: grid;
+  height: 100%;
+  align-content: space-between;
+}
+
+.wrapper > aside ul > div {
+  display: grid;
+  gap: 16px;
+}
+
+.wrapper > aside nav {
+  height: 100%;
+}
+
+.wrapper > aside li {
+  list-style: none;
+}
+
+.wrapper > aside a {
+  color: #78c0e0;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.wrapper > aside a:hover {
+  color: #ddacec;
+}
+
+form {
+  display: grid;
+  max-width: 600px;
+  min-width: 300px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  gap: 4px;
+  margin: 0 auto;
+}
+
+form > h1 {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+form > input {
+  border: none;
+  background-color: rgba(118, 192, 224, 0.1);
+  font-size: 16px;
+  padding: 4px 12px;
+  margin: 4px;
+  outline: none;
+  border-bottom: 2px solid #78c0e0;
+}
+
+form > input:focus {
+  border-bottom: 2px solid #70b86e;
+}
+
+form > label {
+  letter-spacing: 2px;
+  font-size: 14px;
+}

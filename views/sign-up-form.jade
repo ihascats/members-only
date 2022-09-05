@@ -1,0 +1,22 @@
+extends layout 
+
+block content
+  form(action="", method="post")
+    h1 Sign Up
+    label(for="first_name") FIRST NAME
+    input(type="text" name="first_name")
+    
+    label(for="last_name") LAST NAME
+    input(type="text" name="last_name")
+    
+    label(for="username") USERNAME
+    input(type="text" name="username")
+    
+    label(for="email") EMAIL
+    input(type="email" name="email" placeholder="example@mail.com")
+    
+    label(for="password") PASSWORD
+    input(type="password" name="password")  
+    
+    label(for="confirm_password") CONFIRM PASSWORD
+    input(type="password" name="confirm_password")  

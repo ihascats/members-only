@@ -5,4 +5,8 @@ router.get('/', function (req, res, next) {
   res.render('index');
 });
 
+router.get('/sign-up', function (req, res) {
+  res.render('sign-up-form');
+});
+
 module.exports = router;

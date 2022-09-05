@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
-const validator = require('express-validator');
 const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
 
@@ -18,7 +17,6 @@ mongoose.connect(
   process.env.DB_ACCESS_KEY,
   {
     useNewUrlParser: true,
-    useCreateIndex: true,
   },
   (err) => {
     if (!err) {
@@ -40,7 +38,6 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
