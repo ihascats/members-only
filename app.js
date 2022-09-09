@@ -3,18 +3,18 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config();
+const passport = require('passport');
+const session = require('express-session');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('./models/User');
+const bcrypt = require('bcryptjs');
+const flash = require('express-flash');
 
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-
-// Connect MongoDB at default port 27017.
 mongoose.connect(
-  process.env.DB_ACCESS_KEY,
+  process.env.MONGO_CONNECTION,
   {
     useNewUrlParser: true,
   },
@@ -27,6 +27,42 @@ mongoose.connect(
   },
 );
 
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+    },
+    (username, password, done) => {
+      User.findOne({ email: username }, (err, user) => {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect email' });
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            // passwords match! log user in
+            return done(null, user);
+          } else {
+            // passwords do not match!
+            return done(null, false, { message: 'Incorrect password' });
+          }
+        });
+      });
+    },
+  ),
+);
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -35,22 +71,27 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    saveUninitialized: false,
-    resave: false,
-  }),
-);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(flash());
 
-// routes
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

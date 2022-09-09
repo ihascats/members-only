@@ -2,8 +2,9 @@ extends layout
 
 block content
   form(action="", method="post")
-    h1 Log In
-    
+    h1 Log In 
+    if (messages.error)
+      h5= messages.error
     label(for="email") EMAIL
     input(type="email" name="email" placeholder="example@mail.com")
     

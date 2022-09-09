@@ -1,0 +1,154 @@
+extends layout 
+
+block content
+  form(action="", method="post")
+    h1 Sign Up
+    if (messages.errors)
+      each error in messages.errors
+        h5= error 
+    label(for="first_name") FIRST NAME
+    input(type="text" name="first_name" class="firstName")
+    h5(class="firstNameMin")  
+    
+    label(for="last_name") LAST NAME
+    input(type="text" name="last_name" class="lastName")
+    h5(class="lastNameMin")  
+
+    
+    label(for="username") USERNAME
+    input(type="text" name="username" class="username")
+    h5(class="usernameValidation")  
+    
+    label(for="email") EMAIL
+    input(type="email" name="email" placeholder="example@mail.com" class="email")
+    h5(class="emailValid")  
+
+    
+    label(for="password") PASSWORD
+    input(type="password" name="password" class="password")  
+    h5(class="passwordValidation")
+    
+    label(for="confirm_password") CONFIRM PASSWORD
+    input(type="password" name="confirm_password" class='confirmPassword')
+    h5(class="passwordMatch")  
+
+    button Sign Up
+
+  script.
+    function displayInvalidPassword(userPassword) {
+      const password = userPassword;
+      const errorMessage = [];
+
+      if (!/[A-Z]/.test(password)) {
+        errorMessage.push('1 UPPERCASE LETTER');
+      }
+      if (!/[a-z]/.test(password)) {
+        errorMessage.push('1 LOWERCASE LETTER');
+      }
+      if (!/[0-9]/.test(password)) {
+        errorMessage.push('1 NUMBER');
+      }
+      if (!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
+        errorMessage.push('1 SPECIAL CHARACTER');
+      }
+      if (password.length < 8) {
+        errorMessage.push('MINIMUM 8 CHARACTERS');
+      }
+      return errorMessage.join(', ');
+    }
+
+    function minLength(input) {
+      return input.value.length >= 2 ? '' : 'HAS TO BE AT LEAST 2 CHARACTERS LONG' ;
+    }
+
+    function usernameLength(input) {
+      const errArray = []
+      input.value.length >= 2 ? null : errArray.push('HAS TO BE AT LEAST 2 CHARACTERS LONG');
+      input.value.length <= 20 ? null: errArray.push('HAS TO BE AT MOST 20 CHARACTERS LONG');
+      return errArray.join(', ');
+    }
+
+    function passMatch() {
+      return passwordField.value === passwordConfirm.value ? '' : "PASSWORDS DON'T MATCH";
+    }
+
+    function emailValidation(email) {
+      const emailRegex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return emailRegex.test(email.value.toLowerCase()) ? '' : 'NOT A VALID EMAIL'
+    }
+
+    const passwordField = document.querySelector('.password');
+    const passwordMatchField = document.querySelector('.passwordMatch');
+    const firstName = document.querySelector('.firstName');
+    const lastName = document.querySelector('.lastName');
+    const firstNameMin = document.querySelector('.firstNameMin');
+    const lastNameMin = document.querySelector('.lastNameMin');
+    const username = document.querySelector('.username');
+    const usernameValidation = document.querySelector('.usernameValidation');
+    const passwordConfirm = document.querySelector('.confirmPassword')
+    const passwordValidation = document.querySelector('.passwordValidation');
+    const email = document.querySelector('.email')
+    const emailValid = document.querySelector('.emailValid')
+
+    
+
+    const form = document.querySelector('form');
+
+    form.onsubmit = (event) => {
+      document.querySelectorAll('input').forEach(input => input.value === '' ? event.preventDefault() : null);
+      passMatch();
+
+      if (displayInvalidPassword(passwordField.value) !== '') {
+        passwordValidation.textContent = `${displayInvalidPassword(passwordField.value)}`
+        passwordField.oninput = () => {
+          passwordValidation.textContent = `${displayInvalidPassword(passwordField.value)}`
+        };
+        event.preventDefault();
+      }
+      if (minLength(firstName) !== '') {
+        firstNameMin.textContent = `${minLength(firstName)}`
+        firstName.oninput = () => {
+          firstNameMin.textContent = `${minLength(firstName)}`
+        };
+        event.preventDefault();
+      }
+      if (minLength(lastName) !== '') {
+        lastNameMin.textContent = `${minLength(lastName)}`
+        lastName.oninput = () => {
+          lastNameMin.textContent = `${minLength(lastName)}`
+        };
+        event.preventDefault();
+      }
+      if (minLength(username) !== '') {
+        usernameValidation.textContent = `${minLength(username)}`
+        username.oninput = () => {
+          usernameValidation.textContent = `${minLength(username)}`
+        };
+        event.preventDefault();
+      }
+      if (usernameLength(username) !== '') {
+        usernameValidation.textContent = `${usernameLength(username)}`
+        username.oninput = () => {
+          usernameValidation.textContent = `${usernameLength(username)}`
+        };
+        event.preventDefault();
+      }
+      if (passMatch() !== '') {
+        passwordMatchField.textContent = `${passMatch()}`
+        passwordConfirm.oninput = () => {
+          passwordMatchField.textContent = `${passMatch()}`
+        }
+        event.preventDefault();
+
+      }
+      if (emailValidation(email) !== '') {
+        emailValid.textContent = `${emailValidation(email)}`;
+        email.oninput = () => {
+          emailValid.textContent = `${emailValidation(email)}`;
+        }
+        event.preventDefault();
+
+      } 
+
+    }

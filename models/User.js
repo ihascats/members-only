@@ -7,12 +7,12 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
-  admin: { type: boolean, default: false },
-  member: { type: boolean, default: true },
+  admin: { type: Boolean, default: false },
+  member: { type: Boolean, default: true },
 });
 
 UserSchema.virtual('fullName').get(function () {
   return `${this.first_name} ${this.last_name}`;
 });
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = mongoose.model('users', UserSchema);
