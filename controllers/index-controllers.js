@@ -101,3 +101,11 @@ exports.get_log_out = (req, res, next) => {
     res.redirect('/');
   });
 };
+
+exports.logged_in_access = (req, res, next) => {
+  if (res.locals.currentUser) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
