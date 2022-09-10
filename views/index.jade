@@ -5,6 +5,6 @@ block content
     if (currentUser)
       div(class='newMessage')
         textarea(name="msg", cols="30", rows="10", form="messageForm") 
-        form(action="", method="post" id="messageForm") 
+        form(action="/new-message", method="post" id="messageForm") 
           button(class='sendMessage') Send
     

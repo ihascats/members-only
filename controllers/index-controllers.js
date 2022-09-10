@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Message = require('../models/Message');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 
@@ -107,5 +108,26 @@ exports.logged_in_access = (req, res, next) => {
     res.redirect('/');
   } else {
     next();
+  }
+};
+
+exports.post_new_message = async (req, res, next) => {
+  try {
+    const newMessage = new Message({
+      content: req.body.msg,
+      author: res.locals.currentUser._id,
+    });
+    newMessage.save(async (error) => {
+      if (error) {
+        return next(error);
+      } else {
+        await User.findByIdAndUpdate(res.locals.currentUser._id, {
+          $push: { messages: newMessage._id },
+        });
+        res.redirect('/');
+      }
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

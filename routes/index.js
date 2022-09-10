@@ -7,12 +7,15 @@ const {
   get_log_out,
   signupValidate,
   logged_in_access,
+  post_new_message,
 } = require('../controllers/index-controllers');
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
   res.render('index');
 });
+
+router.post('/new-message', post_new_message);
 
 router.get('/sign-up', logged_in_access, get_sign_up);
 
