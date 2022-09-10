@@ -7,20 +7,30 @@ block content
         textarea(name="msg", cols="30", rows="10", form="messageForm") 
         form(action="/new-message", method="post" id="messageForm") 
           button(class='sendMessage') Send
-      each userMessage in userMessages
-        div(class='message')
-          h2= userMessage.author.username
-          if (userMessage.created === userMessage.updated)
-            h3= userMessage.created
-          else
-            h3= `${userMessage.created} Edited at:${userMessage.updated}`
-            
+      div(class='messagesContainer')
+        each userMessage in userMessages
           if (`${userMessage.author._id}` === `${currentUser._id}`)
-            div(class="updateDelete")
-              button Edit 
-              button(data-doc=`${userMessage._id}`) Del
+            div(class='message op')
+              h2= userMessage.author.username
+              if (userMessage.created === userMessage.updated)
+                h3= userMessage.created
+              else
+                h3= `${userMessage.created} Edited at:${userMessage.updated}`
                 
-          p= userMessage.content
+              if (`${userMessage.author._id}` === `${currentUser._id}`)
+                div(class="updateDelete")
+                  button Edit 
+                  button(data-doc=`${userMessage._id}`) Del
+                    
+              p= userMessage.content
+          else
+            div(class='message')
+              h2= userMessage.author.username
+              if (userMessage.created === userMessage.updated)
+                h3= userMessage.created
+              else
+                h3= `${userMessage.created} Edited at:${userMessage.updated}`
+              p= userMessage.content
   script.
     const del = document.querySelector('.home')
     del.onclick = (event) => {
