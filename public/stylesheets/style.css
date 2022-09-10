@@ -161,3 +161,42 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
   color: #70b86e;
 }
+
+.message {
+  width: 600px;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  align-items: end;
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 16px 8px;
+  background: rgb(0 0 0 / 20%);
+}
+
+.message > p {
+  grid-column: span 3;
+  color: #ffd982;
+}
+
+.message > h2 {
+  color: #a4f9c8;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.message > h3 {
+  color: rgb(199 199 199 / 70%);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.updateDelete button {
+  border: none;
+  background-color: rgba(120, 193, 224, 0.8);
+  color: #151515;
+  padding: 4px 8px;
+}
+
+.updateDelete button:hover {
+  background-color: rgba(120, 193, 224, 0.4);
+}

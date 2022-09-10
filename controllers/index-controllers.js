@@ -131,3 +131,21 @@ exports.post_new_message = async (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.get_index = async (req, res, next) => {
+  if (res.locals.currentUser) {
+    res.render('index', {
+      userMessages: await Message.find()
+        .populate('author', 'username')
+        .sort({ createdAt: -1 }),
+    });
+  } else {
+    res.render('index');
+  }
+};
+
+exports.message_delete = (req, res, next) => {
+  Message.findByIdAndRemove(req.params.id).then(() => {
+    res.redirect('/');
+  });
+};
