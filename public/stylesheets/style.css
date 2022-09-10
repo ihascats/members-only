@@ -55,7 +55,7 @@ body {
   color: #ddacec;
 }
 
-form {
+.content > form {
   display: grid;
   max-width: 600px;
   min-width: 300px;
@@ -63,19 +63,20 @@ form {
   padding: 24px;
   gap: 4px;
   margin: 0 auto;
+  width: 100%;
 }
 
-form > h1 {
+.content > form > h1 {
   margin-bottom: 16px;
   text-align: center;
 }
 
-form > h5 {
+.content > form > h5 {
   text-align: center;
   color: #ff4364;
 }
 
-form > input {
+.content > form > input {
   border: none;
   background-color: rgba(118, 192, 224, 0.1);
   font-size: 16px;
@@ -86,16 +87,16 @@ form > input {
   color: #70b86e;
 }
 
-form > input:focus {
+.content > form > input:focus {
   border-bottom: 2px solid #70b86e;
 }
 
-form > label {
+.content > form > label {
   letter-spacing: 2px;
   font-size: 14px;
 }
 
-form > button {
+.content > form > button {
   border: none;
   background-color: rgba(0, 0, 0, 0.3);
   color: #78c0e0;
@@ -103,7 +104,60 @@ form > button {
   padding: 8px 0;
 }
 
-form > button:hover {
+.content > form > button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #70b86e;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.home {
+  height: 100%;
+  width: 100%;
+  padding: 48px 96px;
+}
+
+.newMessage {
+  width: 600px;
+  display: grid;
+  height: 220px;
+  padding: 16px;
+  justify-items: end;
+  background: rgb(0 0 0 / 20%);
+}
+
+.newMessage > textarea {
+  resize: none;
+  width: 100%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #78c0e0;
+  font-size: 20px;
+  outline: none;
+  border-bottom: 2px solid #78c0e0;
+  padding: 4px;
+}
+
+.newMessage > textarea:focus {
+  color: #70b86e;
+  border-bottom: 2px solid #70b86e;
+}
+
+.newMessage button {
+  border: none;
+  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #78c0e0;
+  font-size: 24px;
+  padding: 8px 32px;
+}
+
+.newMessage button:hover {
   background-color: rgba(0, 0, 0, 0.1);
   color: #70b86e;
 }
