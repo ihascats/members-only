@@ -113,6 +113,14 @@ exports.logged_in_access = (req, res, next) => {
   }
 };
 
+exports.limited_access = (req, res, next) => {
+  if (!res.locals.currentUser) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
+
 exports.post_new_message = async (req, res, next) => {
   try {
     const newMessage = new Message({
