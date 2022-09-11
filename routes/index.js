@@ -10,12 +10,13 @@ const {
   post_new_message,
   get_index,
   message_delete,
+  message_validate,
 } = require('../controllers/index-controllers');
 const router = express.Router();
 
 router.get('/', get_index);
 
-router.post('/new-message', post_new_message);
+router.post('/new-message', message_validate, post_new_message);
 
 router.get('/sign-up', logged_in_access, get_sign_up);
 

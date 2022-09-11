@@ -50,6 +50,8 @@ exports.signupValidate = [
     .escape(),
 ];
 
+exports.message_validate = [check('msg').trim().escape()];
+
 exports.get_sign_up = (req, res) => {
   res.render('sign-up');
 };
