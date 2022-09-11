@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+  messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'messages' }],
   admin: { type: Boolean, default: false },
   member: { type: Boolean, default: true },
 });

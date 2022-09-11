@@ -43,6 +43,7 @@ body {
 
 .wrapper > aside li {
   list-style: none;
+  width: 100%;
 }
 
 .wrapper > aside a {
@@ -179,10 +180,22 @@ body {
   color: #ffd982;
 }
 
-.message > h2 {
-  color: #a4f9c8;
+.message a {
+  text-decoration: none;
+}
+
+.message h2 {
+  color: #da65ff;
   font-size: 22px;
   font-weight: 400;
+}
+
+.message h2:hover {
+  opacity: 0.6;
+}
+
+.op h2 {
+  color: #a4f9c8;
 }
 
 .message > h3 {
@@ -210,4 +223,16 @@ body {
 
 .op {
   border-left: 2px solid #70b86e;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: 256px min-content;
+  padding: 48px 0 0 96px;
+  height: 100vh;
+}
+
+.profile > .messagesContainer {
+  margin-top: -48px;
+  height: 100vh;
 }

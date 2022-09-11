@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  div(class='profile')
+    h1= `${profile.fullName} (${h1= profile.username})`
+    div(class='messagesContainer')
+      each msg in profile.messages.reverse() 
+        if (`${msg.author._id}` === `${currentUser._id}`)
+            div(class='message op')
+              h2= profile.username
+              if (msg.created === msg.updated)
+                h3= msg.created
+              else
+                h3= `${msg.created} Edited at:${msg.updated}`
+                
+              if (`${msg.author._id}` === `${currentUser._id}` || currentUser.admin)
+                div(class="updateDelete")
+                  button Edit 
+                  button(data-doc=`${msg._id}`) Del
+                    
+              p= msg.content
+          else
+            div(class='message')
+              h2= profile.username
+              if (msg.created === msg.updated)
+                h3= msg.created
+              else
+                h3= `${msg.created} Edited at:${msg.updated}`
+              p= msg.content

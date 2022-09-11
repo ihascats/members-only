@@ -168,3 +168,16 @@ exports.message_delete = async (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.get_user = async (req, res, next) => {
+  try {
+    const userProfile = await User.findById(req.params.id).populate('messages');
+    if (userProfile) {
+      res.render('user', { profile: userProfile });
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    console.log(1, error);
+  }
+};

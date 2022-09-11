@@ -8,8 +8,12 @@ html
       aside 
         nav 
           ul 
-            a(href="/")
-              li Forum
+            div 
+              a(href="/")
+                li Forum
+              if (currentUser)
+                a(href=`/user-${currentUser._id}` )
+                  li Profile
             div 
               if (currentUser)
                 a(href="/log-out")

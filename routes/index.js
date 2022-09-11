@@ -11,12 +11,14 @@ const {
   get_index,
   message_delete,
   message_validate,
+  get_user,
+  limited_access,
 } = require('../controllers/index-controllers');
 const router = express.Router();
 
 router.get('/', get_index);
 
-router.post('/new-message', message_validate, post_new_message);
+router.post('/new-message', limited_access, message_validate, post_new_message);
 
 router.get('/sign-up', logged_in_access, get_sign_up);
 
@@ -26,8 +28,10 @@ router.post('/sign-up', signupValidate, post_sign_up);
 
 router.post('/log-in', post_log_in);
 
-router.get('/log-out', get_log_out);
+router.get('/log-out', limited_access, get_log_out);
 
-router.delete('/message/delete/:id', message_delete);
+router.get(`/user-:id`, limited_access, get_user);
+
+router.delete('/message/delete/:id', limited_access, message_delete);
 
 module.exports = router;
