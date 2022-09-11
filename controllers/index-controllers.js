@@ -133,15 +133,11 @@ exports.post_new_message = async (req, res, next) => {
 };
 
 exports.get_index = async (req, res, next) => {
-  if (res.locals.currentUser) {
-    res.render('index', {
-      userMessages: await Message.find()
-        .populate('author', 'username')
-        .sort({ createdAt: -1 }),
-    });
-  } else {
-    res.render('index');
-  }
+  res.render('index', {
+    userMessages: await Message.find()
+      .populate('author', 'username')
+      .sort({ createdAt: -1 }),
+  });
 };
 
 exports.message_delete = (req, res, next) => {

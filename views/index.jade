@@ -31,6 +31,14 @@ block content
               else
                 h3= `${userMessage.created} Edited at:${userMessage.updated}`
               p= userMessage.content
+    else 
+      div(class='messagesContainer')
+        each userMessage in userMessages
+          div(class='message')
+            h2 Member
+            h3 Sign in to see details
+            p= userMessage.content
+
   script.
     const del = document.querySelector('.home')
     del.onclick = (event) => {
