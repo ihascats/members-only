@@ -142,8 +142,21 @@ exports.get_index = async (req, res, next) => {
   });
 };
 
-exports.message_delete = (req, res, next) => {
-  Message.findByIdAndRemove(req.params.id).then(() => {
-    res.redirect('/');
-  });
+exports.message_delete = async (req, res, next) => {
+  try {
+    const delMessage = await Message.findById(req.params.id);
+    await User.findByIdAndUpdate(
+      { _id: delMessage.author },
+      { $pull: { messages: req.params.id } },
+      async (error, obj) => {
+        if (error) console.log(error);
+        else {
+          await Message.findByIdAndRemove(req.params.id);
+          res.redirect('/');
+        }
+      },
+    );
+  } catch (error) {
+    console.log(error);
+  }
 };
