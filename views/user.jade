@@ -11,7 +11,7 @@ block content
               if (msg.created === msg.updated)
                 h3= msg.created
               else
-                h3= `${msg.created} Edited at:${msg.updated}`
+                h3= `edited: ${msg.updated}`
                 
               if (`${msg.author._id}` === `${currentUser._id}` || currentUser.admin)
                 div(class="updateDelete")
@@ -25,5 +25,5 @@ block content
               if (msg.created === msg.updated)
                 h3= msg.created
               else
-                h3= `${msg.created} Edited at:${msg.updated}`
+                h3= `edited: ${msg.updated}`
               p= msg.content

@@ -181,3 +181,11 @@ exports.get_user = async (req, res, next) => {
     console.log(1, error);
   }
 };
+
+exports.message_edit = (req, res, next) => {
+  Message.findByIdAndUpdate(req.params.id, {
+    content: req.body.edited,
+  }).then(() => {
+    res.redirect('/');
+  });
+};

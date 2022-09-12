@@ -180,16 +180,16 @@ textarea:focus {
   color: #ffd982;
 }
 
-.editWrap {
+.op > form {
   grid-column: span 3;
 }
 
-.editWrap > form {
+.op > form > div {
   display: flex;
   justify-content: flex-end;
 }
 
-.editWrap > form > button {
+.op > form > div > button {
   border: none;
   width: fit-content;
   background-color: rgba(0, 0, 0, 0.3);
@@ -198,7 +198,7 @@ textarea:focus {
   padding: 8px 32px;
 }
 
-.editWrap > form > button:hover {
+.op > form > div > button:hover {
   background-color: rgba(0, 0, 0, 0.1);
   color: #70b86e;
 }

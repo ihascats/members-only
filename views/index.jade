@@ -16,7 +16,7 @@ block content
               if (userMessage.created === userMessage.updated)
                 h3= userMessage.created
               else
-                h3= `${userMessage.created} Edited at:${userMessage.updated}`
+                h3= `edited: ${userMessage.updated}`
                 
               if (`${userMessage.author._id}` === `${currentUser._id}` || currentUser.admin)
                 div(class="updateDelete")
@@ -57,22 +57,28 @@ block content
       if (event.target.textContent == 'Edit') {
         //- .replaceWith(document.createElement('textarea'))
         const message = event.target.parentElement.nextSibling
-        const editWrap = document.createElement('div')
+        const div = document.createElement('div')
         const textarea = document.createElement('textarea')
         const saveButton = document.createElement('button')
         const cancelButton = document.createElement('button')
         const form = document.createElement('form')
+
+        cancelButton.onclick = (event) => {
+          event.preventDefault();
+          form.replaceWith(message)
+        }
         form.method = "POST";
-        form.action = `/message/delete/${event.target.dataset.doc}`; 
-        editWrap.classList.add('editWrap')
+        form.action = `/message/edit/${event.target.dataset.doc}`; 
+        form.id = 'editMessage'
+        textarea.name = 'edited'
         textarea.value = message.textContent;
         saveButton.textContent = 'Save';
         cancelButton.textContent = 'Cancel';
-        editWrap.appendChild(textarea)
-        form.appendChild(saveButton)
-        form.appendChild(cancelButton)
-        editWrap.appendChild(form)
-        message.replaceWith(editWrap)
+        form.appendChild(textarea)
+        div.appendChild(saveButton)
+        div.appendChild(cancelButton)
+        form.appendChild(div)
+        message.replaceWith(form)
       }
     }
 

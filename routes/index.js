@@ -13,6 +13,7 @@ const {
   message_validate,
   get_user,
   limited_access,
+  message_edit,
 } = require('../controllers/index-controllers');
 const router = express.Router();
 
@@ -31,6 +32,8 @@ router.post('/log-in', post_log_in);
 router.get('/log-out', limited_access, get_log_out);
 
 router.get(`/user-:id`, limited_access, get_user);
+
+router.post('/message/edit/:id', limited_access, message_edit);
 
 router.delete('/message/delete/:id', limited_access, message_delete);
 
