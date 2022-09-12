@@ -13,6 +13,8 @@ const flash = require('express-flash');
 
 const mongoose = require('mongoose');
 
+process.env.NODE_ENV = 'production';
+
 mongoose.connect(
   process.env.MONGO_CONNECTION,
   {
