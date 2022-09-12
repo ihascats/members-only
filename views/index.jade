@@ -67,7 +67,7 @@ block content
                   h3= `${userMessage.created} Edited at:${userMessage.updated}`
                 p= userMessage.content
     else 
-      div(class='messagesContainer')
+      div(class='messagesContainer visit')
         each userMessage in userMessages
           div(class='message')
             h2 Member
@@ -75,12 +75,14 @@ block content
             p= userMessage.content
 
   script.
-    const newMessageArea = document.querySelector('.newMessage > textarea')
-    const newMessageForm = document.querySelector('.newMessage > form')
+    if (document.querySelector('.newMessage > form')) {
+      const newMessageArea = document.querySelector('.newMessage > textarea')
+      const newMessageForm = document.querySelector('.newMessage > form')
 
-    newMessageForm.onsubmit = (event) => {
-      if (newMessageArea.value.trim() === '') {
-        event.preventDefault()
+      newMessageForm.onsubmit = (event) => {
+        if (newMessageArea.value.trim() === '') {
+          event.preventDefault()
+        }
       }
     }
 

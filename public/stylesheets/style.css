@@ -298,3 +298,21 @@ textarea:focus {
   width: 226px;
   margin-right: 30px;
 }
+
+.guest {
+  border: none;
+  color: #70b86e;
+  background-color: rgba(0, 0, 0, 0);
+  text-align: left;
+  font-size: 18px;
+}
+
+.guest:hover {
+  color: #ddacec;
+  cursor: pointer;
+}
+
+.visit {
+  margin-top: -48px;
+  height: 100vh;
+}

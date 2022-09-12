@@ -19,9 +19,31 @@ html
                 a(href="/log-out")
                   li= `Log out ${currentUser.username}`
               else 
+                button(class='guest') Log In As Guest
                 a(href="/log-in")
                   li Log In 
                 a(href="/sign-up")
                   li Sign Up 
       div(class='content')
         block content
+  script.
+    if (document.querySelector('.guest')){
+      const guest = document.querySelector('.guest');
+      guest.onclick = async () => {
+        const data = {
+          email: 'guest@mail.com',
+          password: 'Guest123!'
+        };
+        const json = JSON.stringify(data);
+
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { // listen for state changes
+          if (xhr.readyState == 4 && xhr.status == 200) { // when completed we can move away
+            window.location.href = '/';
+          }
+        }
+        xhr.open("POST", "/log-in");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(json)
+      }
+    }
