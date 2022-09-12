@@ -20,7 +20,7 @@ block content
                 
               if (`${userMessage.author._id}` === `${currentUser._id}` || currentUser.admin)
                 div(class="updateDelete")
-                  button Edit 
+                  button(data-doc=`${userMessage._id}`) Edit
                   button(data-doc=`${userMessage._id}`) Del
                     
               p= userMessage.content
@@ -44,14 +44,35 @@ block content
   script.
     const del = document.querySelector('.home')
     del.onclick = (event) => {
-      if (event.target.textContent !== 'Del') return
-      const status = confirm('This action cannot be undone! Press OK to proceed');
-      if (status){
-        fetch(`/message/delete/${event.target.dataset.doc}`, {
-          method: 'DELETE'
-        }).then(()=>{
-          window.location.href = '/'
-        })
+      if (event.target.textContent === 'Del') {
+        const status = confirm('This action cannot be undone! Press OK to proceed');
+        if (status){
+          fetch(`/message/delete/${event.target.dataset.doc}`, {
+            method: 'DELETE'
+          }).then(()=>{
+            window.location.href = '/'
+          })
+        }
+      }
+      if (event.target.textContent == 'Edit') {
+        //- .replaceWith(document.createElement('textarea'))
+        const message = event.target.parentElement.nextSibling
+        const editWrap = document.createElement('div')
+        const textarea = document.createElement('textarea')
+        const saveButton = document.createElement('button')
+        const cancelButton = document.createElement('button')
+        const form = document.createElement('form')
+        form.method = "POST";
+        form.action = `/message/delete/${event.target.dataset.doc}`; 
+        editWrap.classList.add('editWrap')
+        textarea.value = message.textContent;
+        saveButton.textContent = 'Save';
+        cancelButton.textContent = 'Cancel';
+        editWrap.appendChild(textarea)
+        form.appendChild(saveButton)
+        form.appendChild(cancelButton)
+        editWrap.appendChild(form)
+        message.replaceWith(editWrap)
       }
     }
 

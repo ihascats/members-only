@@ -132,7 +132,7 @@ body {
   background: rgb(0 0 0 / 20%);
 }
 
-.newMessage > textarea {
+textarea {
   resize: none;
   width: 100%;
   border: none;
@@ -144,7 +144,7 @@ body {
   padding: 4px;
 }
 
-.newMessage > textarea:focus {
+textarea:focus {
   color: #70b86e;
   border-bottom: 2px solid #70b86e;
 }
@@ -178,6 +178,29 @@ body {
 .message > p {
   grid-column: span 3;
   color: #ffd982;
+}
+
+.editWrap {
+  grid-column: span 3;
+}
+
+.editWrap > form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editWrap > form > button {
+  border: none;
+  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #78c0e0;
+  font-size: 16px;
+  padding: 8px 32px;
+}
+
+.editWrap > form > button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #70b86e;
 }
 
 .message a {
