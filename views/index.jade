@@ -4,7 +4,7 @@ block content
   div(class='home')
     if (currentUser)
       div(class='newMessage')
-        textarea(name="msg", cols="30", rows="10", form="messageForm") 
+        textarea(name="msg", cols="30", rows="10", form="messageForm")
         form(action="/new-message", method="post" id="messageForm") 
           button(class='sendMessage') Send
       div(class='messagesContainer')
@@ -42,6 +42,15 @@ block content
             p= userMessage.content
 
   script.
+    const newMessageArea = document.querySelector('.newMessage > textarea')
+    const newMessageForm = document.querySelector('.newMessage > form')
+
+    newMessageForm.onsubmit = (event) => {
+      if (newMessageArea.value.trim() === '') {
+        event.preventDefault()
+      }
+    }
+
     const del = document.querySelector('.home')
     del.onclick = (event) => {
       if (event.target.textContent === 'Del') {
@@ -79,6 +88,12 @@ block content
         div.appendChild(cancelButton)
         form.appendChild(div)
         message.replaceWith(form)
+
+        form.onsubmit = (event) => {
+          if (textarea.value === '') {
+            event.preventDefault()
+          }
+        }
       }
     }
 
