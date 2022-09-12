@@ -194,17 +194,20 @@ textarea:focus {
   color: #ffd982;
 }
 
-.op > form {
+.op > form,
+.admin > form {
   grid-column: span 3;
 }
 
-.op > form > div {
+.op > form > div,
+.admin > form > div {
   display: flex;
   justify-content: flex-end;
 }
 
 .op > form > div > button,
-#editUser > div > button {
+#editUser > div > button,
+.admin > form > div > button {
   border: none;
   width: fit-content;
   background-color: rgba(0, 0, 0, 0.3);

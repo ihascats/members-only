@@ -2,7 +2,7 @@ extends layout
 
 block content
   div(class='home')
-    if (currentUser)
+    if (currentUser.admin)
       div(class='newMessage')
         textarea(name="msg", cols="30", rows="10", form="messageForm")
         form(action="/new-message", method="post" id="messageForm") 
@@ -17,8 +17,40 @@ block content
                 h3= userMessage.created
               else
                 h3= `edited: ${userMessage.updated}`
-                
-              if (`${userMessage.author._id}` === `${currentUser._id}` || currentUser.admin)
+              if (`${userMessage.author._id}` === `${currentUser._id}`)
+                div(class="updateDelete")
+                  button(data-doc=`${userMessage._id}`) Edit
+                  button(data-doc=`${userMessage._id}`) Del
+                    
+              p= userMessage.content
+          else
+            div(class='message admin')
+              a(href=`/user-${userMessage.author._id}`) 
+                h2= userMessage.author.username
+              if (userMessage.created === userMessage.updated)
+                h3= userMessage.created
+              else
+                h3= `${userMessage.created} Edited at:${userMessage.updated}`
+              div(class="updateDelete")
+                button(data-doc=`${userMessage._id}`) Edit
+                button(data-doc=`${userMessage._id}`) Del
+              p= userMessage.content
+    else if (currentUser)
+      div(class='newMessage')
+        textarea(name="msg", cols="30", rows="10", form="messageForm")
+        form(action="/new-message", method="post" id="messageForm") 
+          button(class='sendMessage') Send
+      div(class='messagesContainer')
+        each userMessage in userMessages
+          if (`${userMessage.author._id}` === `${currentUser._id}`)
+            div(class='message op')
+              a(href=`/user-${userMessage.author._id}`) 
+                h2= userMessage.author.username
+              if (userMessage.created === userMessage.updated)
+                h3= userMessage.created
+              else
+                h3= `edited: ${userMessage.updated}`
+              if (`${userMessage.author._id}` === `${currentUser._id}`)
                 div(class="updateDelete")
                   button(data-doc=`${userMessage._id}`) Edit
                   button(data-doc=`${userMessage._id}`) Del
