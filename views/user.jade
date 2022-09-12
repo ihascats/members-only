@@ -2,7 +2,15 @@ extends layout
 
 block content
   div(class='profile')
-    h1= `${profile.fullName} (${h1= profile.username})`
+    if (`${profile._id}` === `${currentUser._id}`)
+      div(class='editUser' data-doc=`${currentUser._id}`)
+        h1(class='fullName')= `${profile.fullName}`
+        h2(class='username')= `(${profile.username})`
+    else
+      div
+        h1= `${profile.fullName}`
+        h2= `(${profile.username})`
+
     div(class='messagesContainer')
       each msg in profile.messages.reverse() 
         if (`${msg.author._id}` === `${currentUser._id}`)
@@ -27,3 +35,117 @@ block content
               else
                 h3= `edited: ${msg.updated}`
               p= msg.content
+
+  script.
+    if (document.querySelector('.editUser')){
+      const editUser = document.querySelector('.editUser')
+      editUser.onclick = (event) => {
+        const userField = editUser
+        const form = document.createElement('form')
+
+        const firstName = document.createElement('input')
+        const lastName = document.createElement('input')
+        const username = document.createElement('input')
+
+        const firstNameMin = document.createElement('h6')
+        firstNameMin.classList.add('firstNameMin')
+        const lastNameMin = document.createElement('h6')
+        lastNameMin.classList.add('lastNameMin')
+        const usernameValidation = document.createElement('h6')
+        usernameValidation.classList.add('usernamevalidation')
+
+        const div = document.createElement('div')
+        const saveButton = document.createElement('button')
+        const cancelButton = document.createElement('button')
+
+        cancelButton.onclick = (event) => {
+          event.preventDefault();
+          form.replaceWith(userField)
+        }
+
+        form.method = "POST";
+        form.action = `/user/edit/${editUser.dataset.doc}`; 
+        form.id = 'editUser'
+
+        firstName.name = 'first_name'
+        lastName.name = 'last_name'
+        username.name = 'username'
+
+        firstName.value = document.querySelector('.fullName').textContent.split(' ')[0]
+        lastName.value = document.querySelector('.fullName').textContent.split(' ')[1]
+        username.value = document.querySelector('.username').textContent.split('(')[1].split(')')[0]
+
+        saveButton.textContent = 'Save';
+        cancelButton.textContent = 'Cancel';
+
+        const firstNameLabel = document.createElement('label')
+        const lastNameLabel = document.createElement('label')
+        const usernameLabel = document.createElement('label')
+
+        firstNameLabel.textContent = 'FIRST NAME'
+        lastNameLabel.textContent = 'LAST NAME'
+        usernameLabel.textContent = 'USERNAME'
+
+
+        form.appendChild(firstNameLabel)
+        form.appendChild(firstName)
+        form.appendChild(firstNameMin)
+
+        form.appendChild(lastNameLabel)
+        form.appendChild(lastName)
+        form.appendChild(lastNameMin)
+
+        form.appendChild(usernameLabel)
+        form.appendChild(username)
+        form.appendChild(usernameValidation)
+
+        form.appendChild(div)
+        div.appendChild(saveButton)
+        div.appendChild(cancelButton)
+
+        userField.replaceWith(form)
+
+        function minLength(input) {
+          return input.value.length >= 2 ? '' : 'HAS TO BE AT LEAST 2 CHARACTERS LONG' ;
+        }
+
+        function usernameLength(input) {
+          const errArray = []
+          input.value.length >= 2 ? null : errArray.push('HAS TO BE AT LEAST 2 CHARACTERS LONG');
+          input.value.length <= 20 ? null: errArray.push('HAS TO BE AT MOST 20 CHARACTERS LONG');
+          return errArray.join(', ');
+        }
+
+        form.onsubmit = (event) => {
+          if (minLength(firstName) !== '') {
+            firstNameMin.textContent = `${minLength(firstName)}`
+            firstName.oninput = () => {
+              firstNameMin.textContent = `${minLength(firstName)}`
+            };
+            event.preventDefault();
+          }
+          if (minLength(lastName) !== '') {
+            lastNameMin.textContent = `${minLength(lastName)}`
+            lastName.oninput = () => {
+              lastNameMin.textContent = `${minLength(lastName)}`
+            };
+            event.preventDefault();
+          }
+          if (minLength(username) !== '') {
+            usernameValidation.textContent = `${minLength(username)}`
+            username.oninput = () => {
+              usernameValidation.textContent = `${minLength(username)}`
+            };
+            event.preventDefault();
+          }
+          if (usernameLength(username) !== '') {
+            usernameValidation.textContent = `${usernameLength(username)}`
+            username.oninput = () => {
+              usernameValidation.textContent = `${usernameLength(username)}`
+            };
+            event.preventDefault();
+          }
+        }
+
+      }
+    }

@@ -88,11 +88,25 @@ body {
   color: #70b86e;
 }
 
-.content > form > input:focus {
+#editUser > input {
+  border: none;
+  background-color: rgba(118, 192, 224, 0.1);
+  font-size: 16px;
+  padding: 4px 12px;
+  margin: 4px;
+  outline: none;
+  border-bottom: 2px solid #78c0e0;
+  color: #78c0e0;
+}
+
+.content > form > input:focus,
+#editUser > input:focus {
+  color: #70b86e;
   border-bottom: 2px solid #70b86e;
 }
 
-.content > form > label {
+.content > form > label,
+#editUser > label {
   letter-spacing: 2px;
   font-size: 14px;
 }
@@ -189,7 +203,8 @@ textarea:focus {
   justify-content: flex-end;
 }
 
-.op > form > div > button {
+.op > form > div > button,
+#editUser > div > button {
   border: none;
   width: fit-content;
   background-color: rgba(0, 0, 0, 0.3);
@@ -198,7 +213,8 @@ textarea:focus {
   padding: 8px 32px;
 }
 
-.op > form > div > button:hover {
+.op > form > div > button:hover,
+#editUser > div > button:hover {
   background-color: rgba(0, 0, 0, 0.1);
   color: #70b86e;
 }
@@ -258,4 +274,24 @@ textarea:focus {
 .profile > .messagesContainer {
   margin-top: -48px;
   height: 100vh;
+}
+
+.editUser {
+  height: fit-content;
+}
+
+.editUser:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+#editUser > h6 {
+  color: #ff4364;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#editUser {
+  width: 226px;
+  margin-right: 30px;
 }

@@ -52,6 +52,26 @@ exports.signupValidate = [
 
 exports.message_validate = [check('msg').trim().escape()];
 
+exports.profile_change_validate = [
+  check('first_name')
+    .isLength({ min: 2 })
+    .withMessage('First name must be at least 2 characters')
+    .trim()
+    .escape(),
+  check('last_name')
+    .isLength({ min: 2 })
+    .withMessage('Last name must be at least 2 characters')
+    .trim()
+    .escape(),
+  check('username')
+    .isLength({ min: 2 })
+    .withMessage('Username must be at least 2 characters')
+    .isLength({ max: 20 })
+    .withMessage('Username must be at most 20 characters')
+    .trim()
+    .escape(),
+];
+
 exports.get_sign_up = (req, res) => {
   res.render('sign-up');
 };
@@ -184,8 +204,18 @@ exports.get_user = async (req, res, next) => {
 
 exports.message_edit = (req, res, next) => {
   Message.findByIdAndUpdate(req.params.id, {
-    content: req.body.edited,
+    content: req.body.msg,
   }).then(() => {
     res.redirect('/');
+  });
+};
+
+exports.profile_edit = (req, res, next) => {
+  User.findByIdAndUpdate(req.params.id, {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    username: req.body.username,
+  }).then(() => {
+    res.redirect(`/user-${req.params.id}`);
   });
 };

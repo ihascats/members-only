@@ -70,7 +70,7 @@ block content
         form.method = "POST";
         form.action = `/message/edit/${event.target.dataset.doc}`; 
         form.id = 'editMessage'
-        textarea.name = 'edited'
+        textarea.name = 'msg'
         textarea.value = message.textContent;
         saveButton.textContent = 'Save';
         cancelButton.textContent = 'Cancel';
